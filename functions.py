@@ -18,5 +18,5 @@ def write_index(collection, index):
 
 def read_collection_from_index(collection, col, index):
     # Get data from MongoDB into a pandas DataFrame
-    return pd.DataFrame(list(collection.find({col: {"$gt": int(index)}})))
+    return pd.DataFrame(list(collection.find({col: {"$gt": int(index)}}).sort(col).limit(1000)))
 

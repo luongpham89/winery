@@ -81,6 +81,7 @@ def processing():
     output_db = output_client[OUTPUT_MONGO_DB]
 
     asset_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
+    return
     asset_volume_day.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
     asset_tracking_hour.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
     asset_tracking_day.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
@@ -106,9 +107,9 @@ def processing():
     output_client.close()
     if SSH_TUNNEL:
         server.stop()
-
+processing()
 # Schedule the task to run
-scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
+# scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
 
 # Start the scheduler
-scheduler.start()
+# scheduler.start()
