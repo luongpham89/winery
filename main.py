@@ -81,7 +81,6 @@ def processing():
     output_db = output_client[OUTPUT_MONGO_DB]
 
     asset_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
-    return
     asset_volume_day.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
     asset_tracking_hour.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
     asset_tracking_day.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
