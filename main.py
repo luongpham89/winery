@@ -75,11 +75,10 @@ def processing():
     else:
         # set up MongoDB client
         client = MongoClient(MONGODB_URI)
-        print(MONGODB_OUTPUT_URI)
         output_client = MongoClient(MONGODB_OUTPUT_URI)
 
     db = client[MONGO_DB]
-    output_db = output_client[MONGODB_OUTPUT_URI]
+    output_db = output_client[OUTPUT_MONGO_DB]
 
     asset_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
     return
