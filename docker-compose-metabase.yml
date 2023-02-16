@@ -53,6 +53,8 @@ networks:
 volumes:
   mongodb-data:
     name: mongodb-data
+  mongodb-viz-data:
+    name: mongodb-viz-data
   metabase-data:
     name: metabase-data
 
