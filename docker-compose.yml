@@ -10,6 +10,14 @@ services:
     - .env    
     networks:
       - mongo-net
+    deploy:
+        resources:
+            limits:
+              cpus: 1.00
+              memory: 512M
+            reservations:
+              cpus: 0.50
+              memory: 128M
 
 networks:
   mongo-net:
