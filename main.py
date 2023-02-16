@@ -106,9 +106,9 @@ def processing():
     output_client.close()
     if SSH_TUNNEL:
         server.stop()
-processing()
+
 # Schedule the task to run
-# scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
+scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
 
 # Start the scheduler
-# scheduler.start()
+scheduler.start()
