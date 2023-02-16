@@ -56,8 +56,8 @@ SSH_USER = os.getenv("SSH_USER", "")
 SSH_PASSWORD = os.getenv("SSH_PASSWORD", "")
 SSH_HOST = os.getenv("SSH_HOST", "")
 SSH_PORT = int(os.getenv("SSH_PORT", 22))
-MONGODB_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}/"
-MONGODB_OUTPUT_URI = f"mongodb://{OUTPUT_MONGO_USER}:{OUTPUT_MONGO_PASSWORD}@{OUTPUT_MONGO_HOST}/"
+MONGODB_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/"
+MONGODB_OUTPUT_URI = f"mongodb://{OUTPUT_MONGO_USER}:{OUTPUT_MONGO_PASSWORD}@{OUTPUT_MONGO_HOST}:{OUTPUT_MONGO_PORT}/"
 
 def processing():
     if SSH_TUNNEL:
@@ -76,7 +76,6 @@ def processing():
         # set up MongoDB client
         client = MongoClient(MONGODB_URI)
         output_client = MongoClient(MONGODB_OUTPUT_URI)
-        print(client, output_client)
 
     db = client[MONGO_DB]
     output_db = output_client[OUTPUT_MONGO_DB]
