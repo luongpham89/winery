@@ -13,4 +13,4 @@ services:
 
 networks:
   mongo-net:
-    name: True
+    external: True
