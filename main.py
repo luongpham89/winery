@@ -26,11 +26,11 @@ from proccessing import (
     reward_withdraw,
     router
 )
-import logging
-logging.basicConfig(filename = "main.log",
-                    filemode = "w",
-                    level = logging.DEBUG)
-logger = logging.getLogger()
+# import logging
+# logging.basicConfig(filename = "main.log",
+#                     filemode = "w",
+#                     level = logging.DEBUG)
+# logger = logging.getLogger()
 
 # load environment variables
 from dotenv import load_dotenv
