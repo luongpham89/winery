@@ -4,14 +4,6 @@ services:
   mongo:
     image: mongo
     restart: always
-    deploy:
-        resources:
-            limits:
-              cpus: '1'
-              memory: 512M
-            reservations:
-              cpus: '0.5'
-              memory: 128M
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 1#4sa1B4Y
@@ -24,14 +16,6 @@ services:
   mongo-viz:
     image: mongo
     restart: always
-    deploy:
-        resources:
-            limits:
-              cpus: '1'
-              memory: 512M
-            reservations:
-              cpus: '0.5'
-              memory: 128M
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 1#4sa1B4Y
@@ -44,14 +28,6 @@ services:
   mongo-express:
     image: mongo-express
     restart: always
-    deploy:
-        resources:
-            limits:
-              cpus: '1'
-              memory: 512M
-            reservations:
-              cpus: '0.5'
-              memory: 128M
     depends_on:
       - mongo
       - mongo-viz
@@ -69,14 +45,6 @@ services:
   metabase:
     image: metabase/metabase
     restart: always
-    deploy:
-        resources:
-            limits:
-              cpus: '1'
-              memory: 512M
-            reservations:
-              cpus: '0.5'
-              memory: 128M
     ports:
       - 3000:3000
     networks:
