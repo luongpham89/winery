@@ -6,7 +6,8 @@ from functions import (
     read_index,
     write_index
 )
-def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS):
+def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
+    logger.info(f"Starting to process {__name__} data")
     try:
         _COL = 'reward_history'
         _OUTPUT_COL = f'{_COL}_{COLLECTION_PROCESSED_SUFFIEXS}'
@@ -29,8 +30,8 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS):
             # Push the df to the database
             try:
                 _col_processed.insert_many(_df.to_dict('records'), ordered=False)
-                write_index(_COL, _df['updatedAt'].max())
             except:
                 pass
+            write_index(_COL, _df['updatedAt'].max())
     except:
         pass
