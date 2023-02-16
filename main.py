@@ -109,6 +109,5 @@ def processing():
 
 # Schedule the task to run
 scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
-
 # Start the scheduler
 scheduler.start()
