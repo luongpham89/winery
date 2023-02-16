@@ -19,6 +19,8 @@ services:
       - mongodb-data:/data/db
     networks:
       - mongo-net
+    ports:
+      - 27018:27017
   mongo-viz:
     image: mongo
     restart: always
@@ -37,6 +39,8 @@ services:
       - mongodb-viz-data:/data/db
     networks:
       - mongo-net
+    ports:
+      - 27019:27017
   mongo-express:
     image: mongo-express
     restart: always
@@ -58,7 +62,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: 1#4sa1B4Y
-      ME_CONFIG_MONGODB_URL: mongodb://root:1#4sa1B4Y@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://root:1#4sa1B4Y@mongo-viz:27017/
     
 
 

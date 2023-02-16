@@ -57,6 +57,7 @@ SSH_PASSWORD = os.getenv("SSH_PASSWORD", "")
 SSH_HOST = os.getenv("SSH_HOST", "")
 SSH_PORT = int(os.getenv("SSH_PORT", 22))
 MONGODB_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}/"
+MONGODB_OUTPUT_URI = f"mongodb://{OUTPUT_MONGO_USER}:{OUTPUT_MONGO_PASSWORD}@{OUTPUT_MONGO_HOST}/"
 
 def processing():
     if SSH_TUNNEL:
@@ -70,15 +71,14 @@ def processing():
         server.start()
         # set up MongoDB client
         client = MongoClient(f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@127.0.0.1:{server.local_bind_port}/")
-        output_client = MongoClient(f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@127.0.0.1:{server.local_bind_port}/")
+        output_client = MongoClient(f"mongodb://{OUTPUT_MONGO_USER}:{OUTPUT_MONGO_PASSWORD}@127.0.0.1:{server.local_bind_port}/")
     else:
         # set up MongoDB client
         client = MongoClient(MONGODB_URI)
-        output_client = MongoClient(MONGODB_URI)
+        output_client = MongoClient(MONGODB_OUTPUT_URI)
 
     db = client[MONGO_DB]
     output_db = output_client[OUTPUT_MONGO_DB]
-
     asset_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
     asset_volume_day.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
     asset_tracking_hour.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS)
@@ -105,9 +105,9 @@ def processing():
     output_client.close()
     if SSH_TUNNEL:
         server.stop()
-
+processing()
 # Schedule the task to run
-scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
+# scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
 
 # Start the scheduler
-scheduler.start()
+# scheduler.start()
