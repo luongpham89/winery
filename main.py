@@ -76,6 +76,7 @@ def processing():
         # set up MongoDB client
         client = MongoClient(MONGODB_URI)
         output_client = MongoClient(MONGODB_OUTPUT_URI)
+        print(client, output_client)
 
     db = client[MONGO_DB]
     output_db = output_client[OUTPUT_MONGO_DB]
