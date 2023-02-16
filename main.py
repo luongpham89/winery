@@ -106,7 +106,7 @@ def processing():
     if SSH_TUNNEL:
         server.stop()
 
-# Schedule the task to run every hour
+# Schedule the task to run
 scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
 
 # Start the scheduler
