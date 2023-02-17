@@ -17,20 +17,23 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
         if _df.shape[0]:
             # Process the ObjectId data type
             _df["_id"] = _df["_id"].apply(lambda x: str(x))
+            # Number col
+            cols = ['blockNumber', 'chainId', 'value', 'timeStamp']
+            _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
+            # Date
             _df['createdAt_Date'] = pd.to_datetime(_df['createdAt'], unit='s')
             _df['updatedAt_Date'] = pd.to_datetime(_df['updatedAt'], unit='s')
-            # Number col
-            cols = ['blockNumber', 'chainId', 'value']
-            _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
+            _df['timeStamp_Date'] = pd.to_datetime(_df['timeStamp'], unit='s')
 
             # process ObjectId data type
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))
             
             # Push the df to the database
-            try:
-                _col_processed.insert_many(_df.to_dict('records'), ordered=False)
-            except:
-                pass
+            for row in _df.to_dict(orient='records'):
+                try:
+                    _col_processed.replace_one({'_id': row.get('_id')}, row, upsert=True)
+                except:
+                    pass
             write_index(_COL, _df['updatedAt'].max())
     except:
         pass

@@ -30,10 +30,11 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))
             
             # Push the df to the database
-            try:
-                _col_processed.insert_many(_df.to_dict('records'), ordered=False)
-            except:
-                pass
+            for row in _df.to_dict(orient='records'):
+                try:
+                    _col_processed.replace_one({'_id': row.get('_id')}, row, upsert=True)
+                except:
+                    pass
             write_index(_COL, _df['updatedAt'].max())
     except:
         pass
