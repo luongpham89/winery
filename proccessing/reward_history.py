@@ -18,8 +18,15 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
         if _df.shape[0]:
             # Process the ObjectId data type
             _df["_id"] = _df["_id"].apply(lambda x: str(x))
+            # Number col
+            cols = ['rewardAmount', 'blockNumber']
+            _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
+
             _df['createdAt_Date'] = pd.to_datetime(_df['createdAt'], unit='s')
             _df['updatedAt_Date'] = pd.to_datetime(_df['updatedAt'], unit='s')
+
+            
+            _df['rewardAmount_number'] = _df['rewardAmount'].apply(lambda x: x / 1e18)
             
             # process ObjectId data type
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))

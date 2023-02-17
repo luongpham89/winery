@@ -21,8 +21,11 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
             _df['createdAt_Date'] = pd.to_datetime(_df['createdAt'], unit='s')
             _df['updatedAt_Date'] = pd.to_datetime(_df['updatedAt'], unit='s')
             # Number col
-            cols = ['blockNumber', 'rewardAmount']
+            cols = ['amount', 'netAmount']
             _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
+            
+            _df['amount_number'] = _df['amount'].apply(lambda x: x / 1e18)
+            _df['netAmount_number'] = _df['netAmount'].apply(lambda x: x / 1e18)
             
             # process ObjectId data type
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))
