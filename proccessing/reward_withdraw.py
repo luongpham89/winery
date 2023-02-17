@@ -9,7 +9,7 @@ from functions import (
 def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
     logger.info(f"Starting to process {__name__} data")
     try:
-        _COL = 'reward_history'
+        _COL = 'reward_withdraw'
         _OUTPUT_COL = f'{_COL}_{COLLECTION_PROCESSED_SUFFIEXS}'
         _col = db[_COL]
         _col_processed = output_db[_OUTPUT_COL]
