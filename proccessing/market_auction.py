@@ -24,6 +24,10 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
             cols = ['askPrice', 'bidPrice', 'netBidPrice']
             _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
             
+            _df['askPrice_number'] = _df['askPrice'].apply(lambda x: x / 1e18)
+            _df['bidPrice_number'] = _df['bidPrice'].apply(lambda x: x / 1e18)
+            _df['netBidPrice_number'] = _df['netBidPrice'].apply(lambda x: x / 1e18)
+            
             # process ObjectId data type
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))
             

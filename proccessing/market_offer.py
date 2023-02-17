@@ -22,6 +22,8 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
             # Number col
             cols = ['price']
             _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
+
+            _df['price_number'] = _df['price'].apply(lambda x: x / 1e18)
             
             # process ObjectId data type
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))
