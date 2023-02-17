@@ -25,7 +25,9 @@ from proccessing import (
     reward_history,
     reward_withdraw,
     router,
-    lottery_transaction
+    lottery_transaction,
+    ido_transaction, 
+    masterchef_transaction
 )
 import logging
 logging.basicConfig(filename = "main.log",
@@ -41,6 +43,7 @@ load_dotenv()
 scheduler = BlockingScheduler()
 
 COLLECTION_PROCESSED_SUFFIEXS = os.getenv("COLLECTION_PROCESSED_SUFFIEXS", 'processed')
+RUN_JOB = int(os.getenv("RUN_JOB", 0))
 JOB_INTERVAL = int(os.getenv("JOB_INTERVAL", 0))
 SSH_TUNNEL = int(os.getenv("SSH_TUNNEL", 0))
 MONGO_USER = os.getenv("MONGO_USER", "")
@@ -102,14 +105,18 @@ def processing():
     reward_withdraw.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
     router.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
     lottery_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
+    ido_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
+    masterchef_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
 
     # MongoDB client
     client.close()
     output_client.close()
     if SSH_TUNNEL:
         server.stop()
-# processing()
-# Schedule the task to run
-scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
-# Start the scheduler
-scheduler.start()
+if RUN_JOB:
+    # Schedule the task to run
+    scheduler.add_job(processing, "interval", minutes=JOB_INTERVAL)
+    # Start the scheduler
+    scheduler.start()
+else:
+    processing()

@@ -9,7 +9,7 @@ from functions import (
 def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
     logger.info(f"Starting to process {__name__} data")
     try:
-        _COL = 'lottery_transaction'
+        _COL = 'ido_transaction'
         _OUTPUT_COL = f'{_COL}_{COLLECTION_PROCESSED_SUFFIEXS}'
         _col = db[_COL]
         _col_processed = output_db[_OUTPUT_COL]
@@ -18,16 +18,10 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
         if _df.shape[0]:
             # Process the ObjectId data type
             _df["_id"] = _df["_id"].apply(lambda x: str(x))
-            # Number col
-            cols = ['timestamp', 'amount', 'blockNumber']
-            _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
-            # To date
+            
             _df['createdAt_Date'] = pd.to_datetime(_df['createdAt'], unit='s')
             _df['updatedAt_Date'] = pd.to_datetime(_df['updatedAt'], unit='s')
             _df['timestamp_Date'] = pd.to_datetime(_df['timestamp'], unit='s')
-            
-
-            _df['amount_number'] = _df['amount'].apply(lambda x: x / 1e18)
             
             # process ObjectId data type
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))
