@@ -23,7 +23,7 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
             _df['updatedAt_Date'] = pd.to_datetime(_df['updatedAt'], unit='s')
             _df['timeStamp_Date'] = pd.to_datetime(_df['timeStamp'], unit='s')
 
-            _df['rewardAmount_number'] = _df['rewardAmount'].apply(lambda x: x / 1e18)
+            # _df['rewardAmount_number'] = _df['rewardAmount'].apply(lambda x: x / 1e18)
             
             # process ObjectId data type
             _df['_id'] = _df['_id'].apply(lambda x: ObjectId(x))
