@@ -24,7 +24,8 @@ from proccessing import (
     ref_ranks,
     reward_history,
     reward_withdraw,
-    router
+    router,
+    lottery_transaction
 )
 import logging
 logging.basicConfig(filename = "main.log",
@@ -100,6 +101,7 @@ def processing():
     reward_history.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
     reward_withdraw.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
     router.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
+    lottery_transaction.run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger)
 
     # MongoDB client
     client.close()
