@@ -20,6 +20,7 @@ def run(db, output_db, COLLECTION_PROCESSED_SUFFIEXS, logger):
             _df["id"] = _df["id"].apply(lambda x: str(x))
             _df['createdAt_Date'] = pd.to_datetime(_df['createdAt'], unit='s')
             _df['updatedAt_Date'] = pd.to_datetime(_df['updatedAt'], unit='s')
+            _df['hour_Date'] = pd.to_datetime(_df['hour'], unit='s')
             # Number col
             cols = ['lastPrice', 'quoteVolume', 'baseVolume']
             _df[cols] = _df[cols].apply(pd.to_numeric, errors='coerce', axis=1)
